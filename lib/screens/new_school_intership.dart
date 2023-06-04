@@ -43,8 +43,8 @@ class _NewSchoolIntershipScreenState extends State<NewSchoolIntershipScreen> {
         (value) => showCupertinoModalPopup(
           context: context,
           builder: (context) => CupertinoActionSheet(
-            title: Text('EGCIM UN'),
-            message: Text(
+            title: const Text('EGCIM UN'),
+            message: const Text(
               "Le Stage ecole a ete correctement enregistre.",
             ),
             actions: [
@@ -52,7 +52,7 @@ class _NewSchoolIntershipScreenState extends State<NewSchoolIntershipScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text('Ok'),
+                child: const Text('Ok'),
               )
             ],
           ),

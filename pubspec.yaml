@@ -46,8 +46,10 @@ dependencies:
   image_picker:
   intl:
   path_provider:
+  pdf:
   permission_handler:
   shared_preferences:
+  syncfusion_flutter_pdfviewer:
   url_launcher:
 
 dev_dependencies:
@@ -75,6 +77,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/fonts/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

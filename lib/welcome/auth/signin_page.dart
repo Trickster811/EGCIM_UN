@@ -50,13 +50,13 @@ class _SignInScreenState extends State<SignInScreen> {
           showCupertinoModalPopup(
             context: context,
             builder: (context) => CupertinoActionSheet(
-              title: Text(
+              title: const Text(
                 'Oups!!',
                 style: TextStyle(
                   fontSize: 18,
                 ),
               ),
-              message: Text(
+              message: const Text(
                 'Identifiants are incorrect',
                 style: TextStyle(
                   fontSize: 14,
@@ -66,7 +66,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 CupertinoActionSheetAction(
                   // onPressed: () => imageGallerypicker(ImageSource.camera, context),
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Retry'),
+                  child: const Text('Retry'),
                 ),
               ],
             ),
@@ -78,13 +78,13 @@ class _SignInScreenState extends State<SignInScreen> {
       showCupertinoModalPopup(
         context: context,
         builder: (context) => CupertinoActionSheet(
-          title: Text(
+          title: const Text(
             'Oups!!',
             style: TextStyle(
               fontSize: 18,
             ),
           ),
-          message: Text(
+          message: const Text(
             'Une erreur est survenue',
             style: TextStyle(
               fontSize: 14,
@@ -94,12 +94,11 @@ class _SignInScreenState extends State<SignInScreen> {
             CupertinoActionSheetAction(
               // onPressed: () => imageGallerypicker(ImageSource.camera, context),
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('Retry'),
+              child: const Text('Retry'),
             ),
           ],
         ),
       );
-      ;
     }
   }
 
@@ -383,14 +382,14 @@ class _SignInScreenState extends State<SignInScreen> {
                     //   password: signInPasswordController.text,
                     // );
                     // if (message!.contains('Success')) {
-                    //   Navigator.pushReplacement(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //       builder: (context) => MyHomePage(
-                    //         accountType: accountType!,
-                    //       ),
-                    //     ),
-                    //   );
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyHomePage(
+                          accountType: accountType!,
+                        ),
+                      ),
+                    );
                     // }
                     // ScaffoldMessenger.of(context).showSnackBar(
                     //   SnackBar(
@@ -401,7 +400,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       signInMatriculeController.text,
                       signInPasswordController.text,
                     ];
-                    authentification(userInfo);
+                    // authentification(userInfo);
                   },
                   child: Container(
                     height: 40,

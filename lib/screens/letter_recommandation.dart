@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:egcim_un/screens/components/generer.dart';
+import 'package:egcim_un/screens/components/pdf_view.dart';
 import 'package:egcim_un/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +21,18 @@ class _LettreRecommandationScreenState
   final lettreRecommandationFormKey = GlobalKey<FormState>();
   final letterRecommandationMatriculeController = TextEditingController();
   final letterRecommandationNameController = TextEditingController();
-  final letterRecommandationMentionController = TextEditingController();
-  final letterRecommandationParcoursController = TextEditingController();
   final letterRecommandationCompanyNameController = TextEditingController();
   final letterRecommandationCompanyCityController = TextEditingController();
   final letterRecommandationCompanyPhoneController = TextEditingController();
-  var letterRecommandationStartDateController = TextEditingController();
-  var letterRecommandationEndDateController = TextEditingController();
+  final letterRecommandationIntershipPeriodController = TextEditingController();
+  String? letterRecommandationCompanyDirectorController;
+  String? letterRecommandationMentionController;
+  String? letterRecommandationParcoursController;
+  String? letterRecommandationLevelController;
+  String? letterRecommandationIntershipTypeController;
+  String? letterRecommandationIntershipDurationController;
+  File? pdfFile;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,43 +142,26 @@ class _LettreRecommandationScreenState
                 const SizedBox(
                   height: 20.0,
                 ),
-                TextFormField(
-                  controller: letterRecommandationMentionController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    label: Text(
-                      'Mention',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
+                DropdownButtonFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      letterRecommandationMentionController = value!;
+                    });
+                  },
+                  items: const <DropdownMenuItem<String>>[
+                    DropdownMenuItem(
+                      value: 'Genie Chimique',
+                      child: Text('Genie Chimique'),
                     ),
-                    enabledBorder: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: primaryColor,
-                      ),
+                    DropdownMenuItem(
+                      value: 'Genie Controle et Instrumentation',
+                      child: Text('Genie Controle et Instrumentation'),
                     ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
-                      ),
+                    DropdownMenuItem(
+                      value: "Genie Mineral",
+                      child: Text("Genie Mineral"),
                     ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
-                      ),
-                    ),
-                  ),
-                  validator: RequiredValidator(
-                    errorText: 'Veuillez renseigner ce champs',
-                  ),
-                ),
-                const SizedBox(
-                  height: 20.0,
-                ),
-                TextFormField(
-                  controller: letterRecommandationParcoursController,
-                  keyboardType: TextInputType.text,
+                  ],
                   decoration: const InputDecoration(
                     label: Text(
                       'Parcours',
@@ -183,30 +175,173 @@ class _LettreRecommandationScreenState
                         color: primaryColor,
                       ),
                     ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                DropdownButtonFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      letterRecommandationParcoursController = value!;
+                    });
+                  },
+                  items: const <DropdownMenuItem<String>>[
+                    DropdownMenuItem(
+                      value: 'Genie Pharmaceutique et Chimie Fine',
+                      child: Text('Genie Pharmaceutique et Chimie Fine'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Genie Controle et Instrumentation',
+                      child: Text('Genie Controle et Instrumentation'),
+                    ),
+                    DropdownMenuItem(
+                      value: "Genie Mineral",
+                      child: Text("Genie Mineral"),
+                    ),
+                    DropdownMenuItem(
+                      value: "Genie des Materiaux",
+                      child: Text("Genie des Materiaux"),
+                    ),
+                  ],
+                  decoration: const InputDecoration(
+                    label: Text(
+                      'Parcours',
+                      style: TextStyle(
+                        fontSize: 14,
                       ),
                     ),
-                    focusedErrorBorder: OutlineInputBorder(
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Colors.red,
+                        color: primaryColor,
                       ),
                     ),
                   ),
-                  validator: RequiredValidator(
-                    errorText: 'Veuillez renseigner ce champs',
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                DropdownButtonFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      letterRecommandationLevelController = value!;
+                    });
+                  },
+                  items: const <DropdownMenuItem<String>>[
+                    DropdownMenuItem(
+                      value: "3",
+                      child: Text("3ème"),
+                    ),
+                    DropdownMenuItem(
+                      value: "4",
+                      child: Text("4ème"),
+                    ),
+                    DropdownMenuItem(
+                      value: "5",
+                      child: Text("5ème"),
+                    ),
+                  ],
+                  decoration: const InputDecoration(
+                    label: Text(
+                      'Niveau',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                DropdownButtonFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      letterRecommandationIntershipTypeController = value!;
+                    });
+                  },
+                  items: const <DropdownMenuItem<String>>[
+                    DropdownMenuItem(
+                      value: 'Ouvrier',
+                      child: Text('Ouvrier'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Agent de Maitrise',
+                      child: Text('Agent de Maitrise'),
+                    ),
+                    DropdownMenuItem(
+                      value: "Fin d'etudes",
+                      child: Text("Fin d'etudes"),
+                    ),
+                  ],
+                  decoration: const InputDecoration(
+                    label: Text(
+                      'Type de Stage',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                DropdownButtonFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      letterRecommandationIntershipDurationController = value!;
+                    });
+                  },
+                  items: const <DropdownMenuItem<String>>[
+                    DropdownMenuItem(
+                      value: 'Un (01) a Deux (02) mois',
+                      child: Text('Un (01) a Deux (02) mois'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Deux (02) mois',
+                      child: Text('Deux (02) mois'),
+                    ),
+                    DropdownMenuItem(
+                      value: "Quatre (04) a Six (06) mois",
+                      child: Text("Quatre (04) a Six (06) mois"),
+                    ),
+                  ],
+                  decoration: const InputDecoration(
+                    label: Text(
+                      'Duree',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: primaryColor,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 20.0,
                 ),
                 TextFormField(
-                  controller: letterRecommandationCompanyPhoneController,
-                  keyboardType: TextInputType.number,
+                  controller: letterRecommandationIntershipPeriodController,
+                  keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                     label: Text(
-                      'Niveau',
+                      'Periode',
                       style: TextStyle(
                         fontSize: 14,
                       ),
@@ -269,6 +404,68 @@ class _LettreRecommandationScreenState
                 const SizedBox(
                   height: 20.0,
                 ),
+                DropdownButtonFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      letterRecommandationCompanyDirectorController = value!;
+                    });
+                  },
+                  items: const <DropdownMenuItem<String>>[
+                    DropdownMenuItem(
+                      value: 'Le Directeur Général',
+                      child: Text('Directeur Général'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'La Directrice Générale',
+                      child: Text('Directrice Générale'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Le Directeur',
+                      child: Text('Directeur'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Le Directeur des Ressources Humaines',
+                      child: Text('Directeur des Ressources Humaines'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'La Directrice',
+                      child: Text('Directrice'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'La Directrice des Ressources Humaines',
+                      child: Text('Directrice des Ressources Humaines'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Commandant',
+                      child: Text('Commandant'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Responsable',
+                      child: Text('Responsable'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Chef',
+                      child: Text('Chef'),
+                    ),
+                  ],
+                  decoration: const InputDecoration(
+                    label: Text(
+                      'Dirigeant',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: primaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
                 TextFormField(
                   controller: letterRecommandationCompanyCityController,
                   keyboardType: TextInputType.text,
@@ -304,7 +501,7 @@ class _LettreRecommandationScreenState
                   height: 20.0,
                 ),
                 InkWell(
-                  onTap: () {
+                  onTap: () async {
                     if (!lettreRecommandationFormKey.currentState!.validate()) {
                       showCupertinoModalPopup(
                         context: context,
@@ -323,6 +520,22 @@ class _LettreRecommandationScreenState
                       );
                       return;
                     }
+                    final List<String> studentInfo = [
+                      letterRecommandationMatriculeController.text,
+                      letterRecommandationNameController.text,
+                      letterRecommandationMentionController!,
+                      letterRecommandationParcoursController!,
+                      letterRecommandationLevelController!,
+                      letterRecommandationIntershipTypeController!,
+                      letterRecommandationIntershipDurationController!,
+                      letterRecommandationIntershipPeriodController.text,
+                      letterRecommandationCompanyNameController.text,
+                      letterRecommandationCompanyCityController.text,
+                      letterRecommandationCompanyPhoneController.text,
+                      letterRecommandationCompanyDirectorController!,
+                    ];
+
+                    pdfFile = await PdfParagraphApi.generateLetter(studentInfo);
                     showCupertinoModalPopup(
                       context: context,
                       builder: (context) => CupertinoActionSheet(
@@ -338,7 +551,17 @@ class _LettreRecommandationScreenState
                         ),
                         actions: [
                           CupertinoActionSheetAction(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PdfViewerScreen(
+                                    pdfFile: pdfFile!,
+                                  ),
+                                ),
+                              );
+                            },
                             child: const Text(
                               'Ouvrir',
                               style: TextStyle(
@@ -347,7 +570,7 @@ class _LettreRecommandationScreenState
                             ),
                           ),
                           CupertinoActionSheetAction(
-                            onPressed: () {},
+                            onPressed: () => Navigator.of(context).pop(),
                             child: const Text(
                               'Ok',
                               style: TextStyle(),

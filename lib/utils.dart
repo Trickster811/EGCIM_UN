@@ -186,7 +186,7 @@ class UtilFunctions {
     try {
       final ref = FirebaseStorage.instance.ref(destination);
       return ref.putFile(file);
-    } on FirebaseException catch (e) {
+    } on FirebaseException {
       // print(e);
       return null;
     }
