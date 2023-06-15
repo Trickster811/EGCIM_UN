@@ -627,7 +627,7 @@ class _NewIntershipScreenState extends State<NewIntershipScreen> {
     if (documentFile == null) return;
 
     final fileName = UtilFunctions.baseNameProvider(documentFile!.path);
-    final destination = 'news_images/$fileName';
+    final destination = '$fileName';
 
     task = UtilFunctions.uploadFile(destination, documentFile!);
     setState(() {});

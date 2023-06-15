@@ -37,6 +37,7 @@ dependencies:
   cloud_firestore:
   cupertino_icons: ^1.0.2
   dio:
+  excel:
   file_picker:
   firebase_auth:
   firebase_core:

@@ -1,3 +1,4 @@
+import 'package:egcim_un/screens/components/generer.dart';
 import 'package:egcim_un/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,19 +48,35 @@ class DownloadIntershipsListScreen extends StatelessWidget {
               height: 50,
             ),
             InkWell(
-              onTap: () => showCupertinoModalPopup(
-                context: context,
-                builder: (context) => const CupertinoActionSheet(
-                  title: Text(
-                    'Désolé!!',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
+              onTap: () {
+                // showCupertinoModalPopup(
+                //   context: context,
+                //   builder: (context) => const CupertinoActionSheet(
+                //     title: Text(
+                //       'Désolé!!',
+                //       style: TextStyle(
+                //         fontWeight: FontWeight.w700,
+                //       ),
+                //     ),
+                //     message: Text(
+                //         'Liste non disponible.\nVeuillex réessayer plutard.'),
+                //   ),
+                // );
+                ExcelApi.genereExcelIntershipList([]);
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) => const CupertinoActionSheet(
+                    title: Text(
+                      'Bravo!!',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
+                    message:
+                        Text('Votre Document a ete telecharge avec succes.'),
                   ),
-                  message: Text(
-                      'Liste non disponible.\nVeuillex réessayer plutard.'),
-                ),
-              ),
+                );
+              },
               child: Container(
                 height: 75,
                 // width: 150,

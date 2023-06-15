@@ -1,24 +1,81 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:egcim_un/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
-class CompanyLocalizationScreen extends StatelessWidget {
+class CompanyLocalizationScreen extends StatefulWidget {
   CompanyLocalizationScreen({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<CompanyLocalizationScreen> createState() =>
+      _CompanyLocalizationScreenState();
+}
+
+class _CompanyLocalizationScreenState extends State<CompanyLocalizationScreen> {
   final companyLocalizationFormKey = GlobalKey<FormState>();
+
   final companyLocalizationCompanyNameController = TextEditingController();
+
   final companyLocalizationCompanyActivitySectorController =
       TextEditingController();
+
   final companyLocalizationCompanyCityController = TextEditingController();
+
   final companyLocalizationCompanyDescriptionController =
       TextEditingController();
+
   final companyLocalizationCompanyCoordoneesController =
       TextEditingController();
+
   final companyLocalizationCompanyPhoneController = TextEditingController();
+
+  newCompany(companyInfo) async {
+    try {
+      FirebaseFirestore.instance
+          .collection('Companies')
+          .doc(companyInfo[0])
+          .set({
+        'companyName': companyInfo[0],
+        'companySector': companyInfo[1],
+        'companyTown': companyInfo[2],
+        'companyDescription': companyInfo[3],
+        'companyPhone': companyInfo[4],
+        'companyCoord': companyInfo[5],
+      }).then(
+        (value) => showCupertinoModalPopup(
+          context: context,
+          builder: (context) => CupertinoActionSheet(
+            title: const Text(
+              'Bravo!',
+              style: TextStyle(
+                color: Colors.blue,
+                // fontSize: 16,
+              ),
+            ),
+            message: const Text(
+              "L'entreprise a ete enregistree avec succes.",
+            ),
+            actions: [
+              CupertinoActionSheetAction(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text(
+                  'Ok',
+                  style: TextStyle(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -286,39 +343,15 @@ class CompanyLocalizationScreen extends StatelessWidget {
                       );
                       return;
                     }
-                    showCupertinoModalPopup(
-                      context: context,
-                      builder: (context) => CupertinoActionSheet(
-                        title: const Text(
-                          'Bravo!',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            // fontSize: 16,
-                          ),
-                        ),
-                        message: const Text(
-                          "Votre lettre de Recommandation a été générée avec succès.",
-                        ),
-                        actions: [
-                          CupertinoActionSheetAction(
-                            onPressed: () {},
-                            child: const Text(
-                              'Ouvrir',
-                              style: TextStyle(
-                                color: Colors.green,
-                              ),
-                            ),
-                          ),
-                          CupertinoActionSheetAction(
-                            onPressed: () {},
-                            child: const Text(
-                              'Ok',
-                              style: TextStyle(),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
+                    final companyInfo = [
+                      companyLocalizationCompanyNameController.text,
+                      companyLocalizationCompanyActivitySectorController.text,
+                      companyLocalizationCompanyCityController.text,
+                      companyLocalizationCompanyDescriptionController.text,
+                      companyLocalizationCompanyPhoneController.text,
+                      companyLocalizationCompanyCoordoneesController.text,
+                    ];
+                    newCompany(companyInfo);
                   },
                   child: Container(
                     height: 40,
@@ -328,7 +361,7 @@ class CompanyLocalizationScreen extends StatelessWidget {
                       color: primaryColor,
                     ),
                     child: const Text(
-                      "Générer",
+                      "Enregistrer",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,

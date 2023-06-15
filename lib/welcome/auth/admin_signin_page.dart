@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:egcim_un/utils.dart';
 import 'package:egcim_un/welcome/start_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,6 +18,88 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   final signInAdminIdentifierController = TextEditingController();
 
   final signInPasswordController = TextEditingController();
+
+  authentification(idmat) async {
+    // QuerySnapshot querySnapshot;
+    List<String> docs = [];
+    try {
+      FirebaseFirestore.instance
+          .collection('Users')
+          .doc(idmat[0])
+          .get()
+          .then((DocumentSnapshot doc) async {
+        print(doc.data());
+        docs.add(doc['matriculeOrEmail']);
+        docs.add(doc['password']);
+
+        // print(docs);
+
+        if (docs[0] == idmat[0] && docs[1] == idmat[1]) {
+          UtilFunctions.setFirstTime(true);
+          UtilFunctions.setUserInfo(idmat);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MyHomePage(
+                accountType: 'admin',
+              ),
+            ),
+          );
+        } else {
+          showCupertinoModalPopup(
+            context: context,
+            builder: (context) => CupertinoActionSheet(
+              title: const Text(
+                'Oups!!',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              message: const Text(
+                'Identifiants are incorrect',
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+              actions: [
+                CupertinoActionSheetAction(
+                  // onPressed: () => imageGallerypicker(ImageSource.camera, context),
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          );
+        }
+      });
+      // return 0;
+    } catch (e) {
+      showCupertinoModalPopup(
+        context: context,
+        builder: (context) => CupertinoActionSheet(
+          title: const Text(
+            'Oups!!',
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          message: const Text(
+            'Une erreur est survenue',
+            style: TextStyle(
+              fontSize: 14,
+            ),
+          ),
+          actions: [
+            CupertinoActionSheetAction(
+              // onPressed: () => imageGallerypicker(ImageSource.camera, context),
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Retry'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -256,6 +339,11 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
                         ),
                       ),
                     );
+                    // final userInfo = [
+                    //   signInAdminIdentifierController.text,
+                    //   signInPasswordController.text,
+                    // ];
+                    // authentification(userInfo);
                   },
                   child: Container(
                     height: 40,

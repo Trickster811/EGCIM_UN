@@ -29,7 +29,7 @@ class _SignInScreenState extends State<SignInScreen> {
           .doc(idmat[0])
           .get()
           .then((DocumentSnapshot doc) async {
-        // print(doc.data());
+        print(doc.data());
         docs.add(doc['matriculeOrEmail']);
         docs.add(doc['password']);
 
@@ -276,7 +276,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       : TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     label: Text(
-                      'Email',
+                      'Email ou Matricule',
                       style: TextStyle(
                         fontSize: 14,
                       ),
@@ -382,14 +382,14 @@ class _SignInScreenState extends State<SignInScreen> {
                     //   password: signInPasswordController.text,
                     // );
                     // if (message!.contains('Success')) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyHomePage(
-                          accountType: accountType!,
-                        ),
-                      ),
-                    );
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => MyHomePage(
+                    //       accountType: accountType!,
+                    //     ),
+                    //   ),
+                    // );
                     // }
                     // ScaffoldMessenger.of(context).showSnackBar(
                     //   SnackBar(
@@ -400,7 +400,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       signInMatriculeController.text,
                       signInPasswordController.text,
                     ];
-                    // authentification(userInfo);
+                    authentification(userInfo);
                   },
                   child: Container(
                     height: 40,

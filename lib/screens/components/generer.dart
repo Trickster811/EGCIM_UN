@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:excel/excel.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
@@ -59,37 +60,25 @@ class PdfParagraphApi {
             // ),
             Positioned(
               top: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image(
-                    imgHead,
-                    width: double.maxFinite,
-                    height: 120,
-                    fit: BoxFit.cover,
-                  ),
-                ],
+              child: Container(
+                height: 120,
+                width: 21.0 * PdfPageFormat.cm,
+                color: PdfColors.red,
+                child: Image(
+                  imgHead,
+                  // width: double.maxFinite,
+                  // height: 120,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             SizedBox(height: 10),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'N/Ref.:________________/UN/D-EGCIM/DSES',
                   // /${now.year.toString().substring(2)}',
-                  style: TextStyle(
-                    font: customFont1,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Le Chef de Division',
                   style: TextStyle(
                     font: customFont1,
                     fontSize: 12,
@@ -104,6 +93,7 @@ class PdfParagraphApi {
                 ),
               ],
             ),
+
             SizedBox(height: 10),
             Container(
               alignment: Alignment.topRight,
@@ -292,9 +282,9 @@ class PdfParagraphApi {
     );
   }
 
-  static Future saveDocument(
-      {required String name, required Document pdf}) async {
+  static Future saveDocument({required String name, required pdf}) async {
     Directory? directory;
+    Directory appDocumentDirectory = await getApplicationDocumentsDirectory();
     // try {
     //   if (await _requestPermission(Permission.storage)) {
     //     directory = await getExternalStorageDirectory();
@@ -313,22 +303,20 @@ class PdfParagraphApi {
     //   }
     // } catch (e) {}
     try {
-      if (Platform.isAndroid) {
-        if (await _requestPermission(Permission.storage)) {
-          directory = documentDirectory;
-        }
-      } else {
-        if (await _requestPermission(Permission.photos)) {
-          directory = await getApplicationDocumentsDirectory();
-        }
+      if (await _requestPermission(Permission.storage)) {
+        directory = documentDirectory;
+        print("hhdgfd");
+        final bytes = await pdf.save();
+
+        final file = File("${appDocumentDirectory.path}/$name");
+
+        await file.writeAsBytes(bytes);
+
+        return file;
       }
-      final bytes = await pdf.save();
-      final file = File("${directory!.path}/$name");
-
-      await file.writeAsBytes(bytes);
-
-      return file;
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   static Future<bool> _requestPermission(Permission permission) async {
@@ -346,9 +334,25 @@ class PdfParagraphApi {
   }
 }
 
+class ExcelApi {
+  static Future<File> genereExcelIntershipList(intershipList) async {
+    var excel = Excel.createExcel();
+    var fileBytes = excel.save();
+    var directory = await getApplicationDocumentsDirectory();
+
+    // final excelFile = File('$directory/output_file_name.xlsx')
+    //   // ..createSync(recursive: true)
+    //   ..writeAsBytesSync(fileBytes!);
+    final excelFile = await PdfParagraphApi.saveDocument(
+        name: 'output_file_name.xlsx', pdf: excel);
+    return excelFile;
+  }
+}
+
 final Directory documentDirectory =
-    Directory('/sdcard/Iut Companion/App Documents');
-final Directory imageDirectory = Directory('/sdcard/Iut Companion/App Images');
+    Directory('/storage/emulated/0/EGCIM UN/App Documents');
+final Directory imageDirectory =
+    Directory('/storage/emulated/0/EGCIM UN/App Images');
 
 appFolder() async {
   final status = await Permission.storage.request();
@@ -356,14 +360,17 @@ appFolder() async {
   if (status == PermissionStatus.granted) {
     print('Allowed');
 
-    if (!await Directory('/sdcard/Iut Companion').exists()) {
-      await Directory('/sdcard/Iut Companion').create(recursive: true);
+    if (!await Directory('/storage/emulated/0/EGCIM UN').exists()) {
+      await Directory('/storage/emulated/0/EGCIM UN').create(recursive: true);
+      print("folder created");
     }
     if (!await imageDirectory.exists()) {
       imageDirectory.create(recursive: true);
+      print("folder created");
     }
     if (!await documentDirectory.exists()) {
       documentDirectory.create(recursive: true);
+      print("folder created");
     }
   } else {
     print('Denied');
