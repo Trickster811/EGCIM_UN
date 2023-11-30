@@ -34,18 +34,44 @@ class _SignInScreenState extends State<SignInScreen> {
         docs.add(doc['password']);
 
         // print(docs);
-
-        if (docs[0] == idmat[0] && docs[1] == idmat[1]) {
-          UtilFunctions.setFirstTime(true);
-          UtilFunctions.setUserInfo(idmat);
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MyHomePage(
-                accountType: accountType!,
+        if (doc['status']) {
+          if (docs[0] == idmat[0] && docs[1] == idmat[1]) {
+            UtilFunctions.setFirstTime(true);
+            UtilFunctions.setUserInfo(idmat);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MyHomePage(
+                  accountType: accountType!,
+                ),
               ),
-            ),
-          );
+            );
+          } else {
+            showCupertinoModalPopup(
+              context: context,
+              builder: (context) => CupertinoActionSheet(
+                title: const Text(
+                  'Oups!!',
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+                message: const Text(
+                  'Identifiants are incorrect',
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                actions: [
+                  CupertinoActionSheetAction(
+                    // onPressed: () => imageGallerypicker(ImageSource.camera, context),
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            );
+          }
         } else {
           showCupertinoModalPopup(
             context: context,
@@ -57,7 +83,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               message: const Text(
-                'Identifiants are incorrect',
+                "Votre compte n'a pas encore ete confirme par l'etablissement. Veuillez contacter le service des stages.",
                 style: TextStyle(
                   fontSize: 14,
                 ),
@@ -66,7 +92,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 CupertinoActionSheetAction(
                   // onPressed: () => imageGallerypicker(ImageSource.camera, context),
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Retry'),
+                  child: const Text('Ok'),
                 ),
               ],
             ),

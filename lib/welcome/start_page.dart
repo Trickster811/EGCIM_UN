@@ -4,6 +4,7 @@ import 'package:egcim_un/screens/letter_recommandation.dart';
 import 'package:egcim_un/screens/new_intership.dart';
 import 'package:egcim_un/screens/new_school_intership.dart';
 import 'package:egcim_un/screens/research_company.dart';
+import 'package:egcim_un/screens/student_account_confirmation.dart';
 import 'package:egcim_un/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
         elevation: 0,
+        automaticallyImplyLeading: false,
         title: const Text(
           'EGCIM UN',
           style: TextStyle(
@@ -78,8 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Image.asset(
               'assets/images/EGCIM-logo.png',
-              height: 200,
-              width: 200,
+              height: 150,
+              width: 150,
             ),
             const SizedBox(
               height: 20,
@@ -239,6 +241,33 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         child: Text(
                           'Télécharger\nla liste des Stages'.toUpperCase(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const StudentAccountConfirmation(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Text(
+                          'Confirmer Compte Etudiants'.toUpperCase(),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             color: Colors.white,

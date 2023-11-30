@@ -21,9 +21,18 @@ class _NewSchoolIntershipScreenState extends State<NewSchoolIntershipScreen> {
   final newIntershipCompanyNameController = TextEditingController();
   final newIntershipCompanyCityController = TextEditingController();
   final newIntershipCompanyPhoneController = TextEditingController();
-  final newIntershipLevel3Controller = TextEditingController();
-  final newIntershipLevel4Controller = TextEditingController();
-  final newIntershipLevel5Controller = TextEditingController();
+  final newIntershipLevel3ChemistryController = TextEditingController();
+  final newIntershipLevel4ChemistryController = TextEditingController();
+  final newIntershipLevel5ChemistryController = TextEditingController();
+  final newIntershipLevel3MineralController = TextEditingController();
+  final newIntershipLevel4MineralController = TextEditingController();
+  final newIntershipLevel5MineralController = TextEditingController();
+  final newIntershipLevel3MaterialsController = TextEditingController();
+  final newIntershipLevel4MaterialsController = TextEditingController();
+  final newIntershipLevel5MaterialsController = TextEditingController();
+  final newIntershipLevel3ControlController = TextEditingController();
+  final newIntershipLevel4ControlController = TextEditingController();
+  final newIntershipLevel5ControlController = TextEditingController();
   File? documentFile;
   UploadTask? task;
 
@@ -36,9 +45,11 @@ class _NewSchoolIntershipScreenState extends State<NewSchoolIntershipScreen> {
         'companyName': schoolIntershipInfo[0],
         'companyTowm': schoolIntershipInfo[1],
         'companyPhone': schoolIntershipInfo[2],
-        'level3PlaceNumber': schoolIntershipInfo[3],
-        'level4PlaceNumber': schoolIntershipInfo[4],
-        'level5PlaceNumber': schoolIntershipInfo[5],
+        'Génie_de_Procédés_et_Chimie FinePlaceNumber': schoolIntershipInfo[3],
+        'Génie_MinéralPlaceNumber': schoolIntershipInfo[4],
+        'Génie_des_MatériauxPlaceNumber': schoolIntershipInfo[5],
+        'Génie_Controle_et_InstrumentationPlaceNumber': schoolIntershipInfo[6],
+        'file': schoolIntershipInfo[7],
       }).then(
         (value) => showCupertinoModalPopup(
           context: context,
@@ -213,13 +224,32 @@ class _NewSchoolIntershipScreenState extends State<NewSchoolIntershipScreen> {
                 ),
                 Row(
                   children: [
+                    const Text(
+                      'Génie de Procédés et Chimie Fine',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      height: 20,
+                      width: 20,
+                      color: primaryColor,
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
                     const Padding(
                       padding: EdgeInsets.only(right: 15.0),
                       child: Text('Niveau 3:'),
                     ),
                     Expanded(
                       child: TextFormField(
-                        controller: newIntershipLevel3Controller,
+                        controller: newIntershipLevel3ChemistryController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           hintText: '0',
@@ -258,7 +288,7 @@ class _NewSchoolIntershipScreenState extends State<NewSchoolIntershipScreen> {
                     ),
                     Expanded(
                       child: TextFormField(
-                        controller: newIntershipLevel4Controller,
+                        controller: newIntershipLevel4ChemistryController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           hintText: '0',
@@ -297,7 +327,415 @@ class _NewSchoolIntershipScreenState extends State<NewSchoolIntershipScreen> {
                     ),
                     Expanded(
                       child: TextFormField(
-                        controller: newIntershipLevel5Controller,
+                        controller: newIntershipLevel5ChemistryController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: '0',
+                          enabledBorder: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        validator: RequiredValidator(
+                          errorText: 'Veuillez renseigner ce champs',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Génie Minéral',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      height: 20,
+                      width: 20,
+                      color: primaryColor,
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: Text('Niveau 3:'),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: newIntershipLevel3MineralController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: '0',
+                          enabledBorder: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        validator: RequiredValidator(
+                          errorText: 'Veuillez renseigner ce champs',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: Text('Niveau 4:'),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: newIntershipLevel4MineralController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: '0',
+                          enabledBorder: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        validator: RequiredValidator(
+                          errorText: 'Veuillez renseigner ce champs',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: Text('Niveau 5:'),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: newIntershipLevel5MineralController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: '0',
+                          enabledBorder: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        validator: RequiredValidator(
+                          errorText: 'Veuillez renseigner ce champs',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Génie des Matériaux',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      height: 20,
+                      width: 20,
+                      color: primaryColor,
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: Text('Niveau 3:'),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: newIntershipLevel3MaterialsController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: '0',
+                          enabledBorder: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        validator: RequiredValidator(
+                          errorText: 'Veuillez renseigner ce champs',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: Text('Niveau 4:'),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: newIntershipLevel4MaterialsController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: '0',
+                          enabledBorder: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        validator: RequiredValidator(
+                          errorText: 'Veuillez renseigner ce champs',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: Text('Niveau 5:'),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: newIntershipLevel5MaterialsController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: '0',
+                          enabledBorder: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        validator: RequiredValidator(
+                          errorText: 'Veuillez renseigner ce champs',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Génie Controle et Instrumentation',
+                      style: TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      height: 20,
+                      width: 20,
+                      color: primaryColor,
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: Text('Niveau 3:'),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: newIntershipLevel3ControlController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: '0',
+                          enabledBorder: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        validator: RequiredValidator(
+                          errorText: 'Veuillez renseigner ce champs',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: Text('Niveau 4:'),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: newIntershipLevel4ControlController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: '0',
+                          enabledBorder: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                        validator: RequiredValidator(
+                          errorText: 'Veuillez renseigner ce champs',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15.0),
+                      child: Text('Niveau 5:'),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        controller: newIntershipLevel5ControlController,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           hintText: '0',
@@ -465,8 +903,8 @@ class _NewSchoolIntershipScreenState extends State<NewSchoolIntershipScreen> {
   Future uploadFile() async {
     if (documentFile == null) return;
 
-    final fileName = UtilFunctions.baseNameProvider(documentFile!.path);
-    final destination = 'news_images/$fileName';
+    // final fileName = UtilFunctions.baseNameProvider(documentFile!.path);
+    final destination = newIntershipCompanyNameController.text;
 
     task = UtilFunctions.uploadFile(destination, documentFile!);
     setState(() {});
@@ -505,9 +943,26 @@ class _NewSchoolIntershipScreenState extends State<NewSchoolIntershipScreen> {
       newIntershipCompanyNameController.text,
       newIntershipCompanyCityController.text,
       newIntershipCompanyPhoneController.text,
-      newIntershipLevel3Controller.text,
-      newIntershipLevel4Controller.text,
-      newIntershipLevel5Controller.text,
+      [
+        newIntershipLevel3ChemistryController.text,
+        newIntershipLevel4ChemistryController.text,
+        newIntershipLevel5ChemistryController.text,
+      ],
+      [
+        newIntershipLevel3MineralController.text,
+        newIntershipLevel4MineralController.text,
+        newIntershipLevel5MineralController.text,
+      ],
+      [
+        newIntershipLevel3MaterialsController.text,
+        newIntershipLevel4MaterialsController.text,
+        newIntershipLevel5MaterialsController.text,
+      ],
+      [
+        newIntershipLevel3ControlController.text,
+        newIntershipLevel4ControlController.text,
+        newIntershipLevel5ControlController.text,
+      ],
       urlDownload,
     ];
     newSchoolIntership(schoolIntershipInfo);

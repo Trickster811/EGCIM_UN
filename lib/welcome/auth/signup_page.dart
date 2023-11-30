@@ -28,24 +28,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'name': studentInfo[2],
         'email': studentInfo[3],
         'phone': studentInfo[4],
+        'status': false,
       }).then(
         (value) => showCupertinoModalPopup(
           context: context,
           builder: (context) => CupertinoActionSheet(
             title: const Text('EGCIM UN'),
             message: const Text(
-              "Votre compte a ete cree avec succes\nVeuillez vous connecter afin d'acceder aux fonctionnalites de l'application.",
+              "Vos informations ont ete envoyees avec succes pour verification a l'etablissement. Veuillez vous reconnecter dans environ 1 jour maximum",
             ),
             actions: [
               CupertinoActionSheetAction(
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignInScreen(),
-                    ),
-                  );
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const SignInScreen(),
+                  //   ),
+                  // );
                 },
                 child: const Text('Ok'),
               )

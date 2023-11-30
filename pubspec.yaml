@@ -42,6 +42,7 @@ dependencies:
   firebase_auth:
   firebase_core:
   firebase_storage:
+  flutter_launcher_icons:
   flutter_svg:
   form_field_validator:
   image_picker:
@@ -66,6 +67,11 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: 'assets/images/EGCIM-logo.png'
 
 # The following section is specific to Flutter packages.
 flutter:

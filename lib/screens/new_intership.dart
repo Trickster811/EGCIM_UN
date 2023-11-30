@@ -45,6 +45,7 @@ class _NewIntershipScreenState extends State<NewIntershipScreen> {
         'companyPhone': intershipInfo[6],
         'startDate': intershipInfo[7],
         'endDate': intershipInfo[8],
+        'file': intershipInfo[9],
       }).then(
         (value) => showCupertinoModalPopup(
           context: context,
@@ -626,8 +627,16 @@ class _NewIntershipScreenState extends State<NewIntershipScreen> {
   Future uploadFile() async {
     if (documentFile == null) return;
 
-    final fileName = UtilFunctions.baseNameProvider(documentFile!.path);
-    final destination = '$fileName';
+    // final fileName = UtilFunctions.baseNameProvider(documentFile!.path);
+    final destination = newIntershipMatriculeController.text +
+        '_' +
+        newIntershipNameController.text +
+        '_' +
+        newIntershipMentionController.text +
+        '_' +
+        newIntershipParcoursController.text +
+        '_' +
+        newIntershipCompanyNameController.text;
 
     task = UtilFunctions.uploadFile(destination, documentFile!);
     setState(() {});
